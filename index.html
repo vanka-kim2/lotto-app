@@ -244,7 +244,7 @@ body.light .disclaimer{background:rgba(0,0,0,.03);}
 /* ===============================
    FREQUENCY GRID
 =============================== */
-.lfreq-grid{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:5px;}
+.lfreq-grid{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:3px;}
 .lfreq-item.dummy{visibility:hidden;}
 .lfreq-item{
   background:var(--card2);border:1px solid var(--border);border-radius:9px;
@@ -252,8 +252,8 @@ body.light .disclaimer{background:rgba(0,0,0,.03);}
 }
 .lfreq-item.hot-item{border-color:rgba(255,77,109,.5);}
 .lfreq-item.cold-item{border-color:rgba(78,174,255,.4);}
-.freq-cnt{font-size:11px;color:var(--text2);margin-top:3px;}
-.fbar-wrap{height:3px;background:var(--border);border-radius:2px;margin-top:5px;overflow:hidden;}
+.freq-cnt{font-size:10px;color:var(--text2);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.fbar-wrap{height:3px;background:var(--border);border-radius:2px;margin-top:3px;overflow:hidden;}
 .fbar{height:100%;border-radius:2px;transition:width 1s ease;}
 .pfreq-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
 .pfreq-item{
@@ -1288,7 +1288,7 @@ function lRenderFreq(){
     const isH=hot5.includes(n),isC=cold5.includes(n);
     const bc=isH?'var(--red)':isC?'var(--blue)':'var(--L)';
     grid.innerHTML+=`<div class="lfreq-item ${isH?'hot-item':''} ${isC?'cold-item':''}">
-      <div class="ball ${lBallClass(n)}" style="width:32px;height:32px;font-size:12px;margin:0 auto 3px;">${n}</div>
+      <div class="ball ${lBallClass(n)}" style="width:28px;height:28px;font-size:11px;margin:0 auto 2px;">${n}</div>
       <div class="freq-cnt">${f}회</div>
       <div class="fbar-wrap"><div class="fbar" style="width:${pct}%;background:${bc};"></div></div>
     </div>`;
