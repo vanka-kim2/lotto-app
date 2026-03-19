@@ -1131,6 +1131,14 @@ let adTimer=null, adResolve=null;
 
 function watchAd(){
   if(adCount>=AD_DAILY_LIMIT){toast(`오늘 광고는 최대 ${AD_DAILY_LIMIT}회까지만 볼 수 있어요`,'warn');return;}
+  // 앱 환경이면 Kodular로 신호 전송 (Web View String Change 트리거)
+  if(window.KodularReady){
+    try{
+      window.AppInventor.setWebViewString('showAd');
+      return;
+    }catch(e){}
+  }
+  // 웹 환경이면 시뮬레이션 모달
   showAdModal();
 }
 
@@ -1154,8 +1162,11 @@ function showAdModal(){
 }
 
 function completeAd(){
+  // 네이티브 광고(Kodular)에서 호출될 때는 모달이 없으므로 조건 처리
   if(adTimer) clearInterval(adTimer);
-  document.getElementById('ad-modal').classList.remove('show');
+  const modal=document.getElementById('ad-modal');
+  if(modal) modal.classList.remove('show');
+  if(adCount>=AD_DAILY_LIMIT){toast(`오늘 광고는 최대 ${AD_DAILY_LIMIT}회까지만 볼 수 있어요`,'warn');return;}
   adCount++; points+=100; lw('points',points);
   updatePointUI();
   toast('🎉 광고 시청 완료! +100P','lotto');
