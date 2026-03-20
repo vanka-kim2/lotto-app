@@ -205,10 +205,12 @@ body.light .disclaimer{background:rgba(0,0,0,.03);}
 =============================== */
 .ball{
   display:inline-flex;align-items:center;justify-content:center;
-  width:36px;height:36px;border-radius:50%;font-family:'Gmarket Sans',sans-serif;
-  font-size:13px;font-weight:700;flex-shrink:0;cursor:default;
+  width:clamp(28px,8vw,40px);height:clamp(28px,8vw,40px);border-radius:50%;font-family:'Gmarket Sans',sans-serif;
+  font-size:clamp(11px,3vw,15px);font-weight:700;flex-shrink:0;cursor:default;
   transition:transform .15s,box-shadow .15s;
 }
+.ball.sm{width:clamp(22px,6vw,32px);height:clamp(22px,6vw,32px);font-size:clamp(9px,2.5vw,13px);}
+.ball.lg{width:clamp(34px,10vw,48px);height:clamp(34px,10vw,48px);font-size:clamp(14px,4vw,18px);}
 .ball.sm{width:30px;height:30px;font-size:11px;}
 .ball.lg{width:44px;height:44px;font-size:16px;}
 .ball.selectable{cursor:pointer;}
@@ -223,8 +225,8 @@ body.light .disclaimer{background:rgba(0,0,0,.03);}
 .bx{background:radial-gradient(circle at 35% 35%,#e8c8ff,var(--purple));color:#1a0030;box-shadow:0 3px 10px rgba(192,132,252,.5);}
 
 .pd{
-  width:34px;height:34px;border-radius:8px;font-family:'Gmarket Sans',sans-serif;
-  font-size:16px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;
+  width:clamp(26px,8vw,38px);height:clamp(26px,8vw,38px);border-radius:8px;font-family:'Gmarket Sans',sans-serif;
+  font-size:clamp(12px,3.5vw,18px);font-weight:700;display:inline-flex;align-items:center;justify-content:center;
   background:var(--card2);border:1px solid var(--border);color:var(--text);flex-shrink:0;
   cursor:default;transition:transform .15s;
 }
@@ -244,7 +246,7 @@ body.light .disclaimer{background:rgba(0,0,0,.03);}
 /* ===============================
    FREQUENCY GRID
 =============================== */
-.lfreq-grid{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:3px;}
+.lfreq-grid{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:clamp(1px,0.5vw,4px);}
 .lfreq-item.dummy{visibility:hidden;}
 .lfreq-item{
   background:var(--card2);border:1px solid var(--border);border-radius:9px;
@@ -252,10 +254,10 @@ body.light .disclaimer{background:rgba(0,0,0,.03);}
 }
 .lfreq-item.hot-item{border-color:rgba(255,77,109,.5);}
 .lfreq-item.cold-item{border-color:rgba(78,174,255,.4);}
-.freq-cnt{font-size:10px;color:var(--text2);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.fbar-wrap{height:3px;background:var(--border);border-radius:2px;margin-top:3px;overflow:hidden;}
+.freq-cnt{font-size:clamp(7px,1.8vw,11px);color:var(--text2);margin-top:1px;white-space:nowrap;}
+.fbar-wrap{height:2px;background:var(--border);border-radius:2px;margin-top:2px;overflow:hidden;}
 .fbar{height:100%;border-radius:2px;transition:width 1s ease;}
-.pfreq-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
+.pfreq-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:clamp(4px,1.5vw,10px);}
 .pfreq-item{
   background:var(--card2);border:1px solid var(--border);border-radius:10px;
   padding:11px 5px 9px;text-align:center;
@@ -1299,8 +1301,8 @@ function lRenderFreq(){
     const isH=hot5.includes(n),isC=cold5.includes(n);
     const bc=isH?'var(--red)':isC?'var(--blue)':'var(--L)';
     grid.innerHTML+=`<div class="lfreq-item ${isH?'hot-item':''} ${isC?'cold-item':''}">
-      <div class="ball ${lBallClass(n)}" style="width:28px;height:28px;font-size:11px;margin:0 auto 2px;">${n}</div>
-      <div class="freq-cnt">${f}회</div>
+      <div class="ball ${lBallClass(n)}" style="width:clamp(18px,5.5vw,34px);height:clamp(18px,5.5vw,34px);font-size:clamp(9px,2.5vw,14px);margin:0 auto 2px;">${n}</div>
+      <div class="freq-cnt">${f}</div>
       <div class="fbar-wrap"><div class="fbar" style="width:${pct}%;background:${bc};"></div></div>
     </div>`;
   }
@@ -1391,7 +1393,7 @@ function lRenderReco(){
   for(let n=1;n<=45;n++){
     const sel=lFixNums.has(n);
     const btn=document.createElement('div');
-    btn.className='ball '+lBallClass(n)+' selectable sm'+(sel?' selected':'');
+    btn.className='ball '+lBallClass(n)+' selectable'+(sel?' selected':'');btn.style.cssText='width:clamp(22px,6.5vw,36px);height:clamp(22px,6.5vw,36px);font-size:clamp(10px,2.8vw,14px);';
     btn.textContent=n;
     btn.addEventListener('click',()=>lToggleFix(n));
     fixGrid.appendChild(btn);
