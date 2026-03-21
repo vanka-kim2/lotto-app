@@ -172,8 +172,8 @@ body.light .disclaimer{background:rgba(0,0,0,.03);}
   display:grid;gap:4px;background:var(--surface);padding:5px;
   border-radius:14px;border:1px solid var(--border);margin-bottom:18px;
 }
-.lotto-tabs{grid-template-columns:repeat(6,1fr);}
-.pension-tabs{grid-template-columns:repeat(6,1fr);}
+.lotto-tabs{grid-template-columns:repeat(5,1fr);}
+.pension-tabs{grid-template-columns:repeat(5,1fr);}
 .tab{
   padding:8px 3px;border:none;background:transparent;color:var(--muted);cursor:pointer;
   border-radius:10px;font-size:11px;font-family:'Noto Sans KR',sans-serif;font-weight:700;
@@ -632,23 +632,27 @@ body.pension-mode .page-btn.active-page { background: var(--P); color: #000; bor
 <div class="game-panel active" id="panel-lotto">
 
   <!-- Range -->
-  <div class="range-selector lotto-range">
-    <span class="range-label">📊 분석 범위</span>
-    <div class="range-preset" id="L-presets">
-      <button class="preset-btn active" onclick="lSetPreset('all',this)">전체</button>
-      <button class="preset-btn" onclick="lSetPreset('100',this)">최근 100회</button>
-      <button class="preset-btn" onclick="lSetPreset('200',this)">최근 200회</button>
-      <button class="preset-btn" onclick="lSetPreset('500',this)">최근 500회</button>
-      <button class="preset-btn" onclick="lSetPreset('custom',this)">직접 설정</button>
+  <div class="range-selector lotto-range" style="flex-direction:column;align-items:flex-start;gap:10px;">
+    <div style="display:flex;align-items:center;gap:10px;width:100%;flex-wrap:wrap;">
+      <span class="range-label">📊 분석 범위</span>
+      <span class="range-info" id="L-range-info" style="margin-left:0;font-size:14px;font-weight:700;color:var(--text);"></span>
     </div>
-    <div id="L-custom-range" style="display:none;align-items:center;gap:5px;flex-wrap:wrap;">
-      <select class="range-select" id="L-from"></select>
-      <span style="color:var(--muted);font-size:12px;">회 ~</span>
-      <select class="range-select" id="L-to"></select>
-      <span style="color:var(--muted);font-size:12px;">회</span>
-      <button class="range-apply" onclick="lApplyRange()">적용</button>
+    <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;width:100%;">
+      <div class="range-preset" id="L-presets">
+        <button class="preset-btn active" onclick="lSetPreset('all',this)">전체</button>
+        <button class="preset-btn" onclick="lSetPreset('100',this)">최근 100회</button>
+        <button class="preset-btn" onclick="lSetPreset('200',this)">최근 200회</button>
+        <button class="preset-btn" onclick="lSetPreset('500',this)">최근 500회</button>
+        <button class="preset-btn" onclick="lSetPreset('custom',this)">직접 설정</button>
+      </div>
+      <div id="L-custom-range" style="display:none;align-items:center;gap:5px;flex-wrap:wrap;">
+        <select class="range-select" id="L-from"></select>
+        <span style="color:var(--muted);font-size:12px;">회 ~</span>
+        <select class="range-select" id="L-to"></select>
+        <span style="color:var(--muted);font-size:12px;">회</span>
+        <button class="range-apply" onclick="lApplyRange()">적용</button>
+      </div>
     </div>
-    <span class="range-info" id="L-range-info"></span>
   </div>
 
   <div class="tabs lotto-tabs">
@@ -657,13 +661,13 @@ body.pension-mode .page-btn.active-page { background: var(--P); color: #000; bor
     <button class="tab" onclick="lSwitch('pair',this)">🔗<br>페어</button>
     <button class="tab" onclick="lSwitch('reco',this)">✨<br>추천</button>
     <button class="tab" onclick="lSwitch('mynum',this)">⭐<br>내번호</button>
-    <button class="tab" onclick="lSwitch('add',this)">➕<br>추가</button>
+
   </div>
 
   <div class="sub-section active" id="L-freq">
     <div class="card">
       <div class="card-title">🔥 번호별 출현 빈도</div>
-      <div class="data-count" id="L-data-count"></div>
+  
       <div class="lfreq-grid" id="L-freq-grid"></div>
       <div style="display:flex;gap:14px;margin-top:10px;font-size:12px;flex-wrap:wrap;">
         <span style="color:var(--red);">🔴 HOT (상위5)</span>
@@ -820,23 +824,27 @@ body.pension-mode .page-btn.active-page { background: var(--P); color: #000; bor
 <div class="game-panel" id="panel-pension">
 
   <!-- Range -->
-  <div class="range-selector pension-range">
-    <span class="range-label">📊 분석 범위</span>
-    <div class="range-preset" id="P-presets">
-      <button class="preset-btn active" onclick="pSetPreset('all',this)">전체</button>
-      <button class="preset-btn" onclick="pSetPreset('50',this)">최근 50회</button>
-      <button class="preset-btn" onclick="pSetPreset('100',this)">최근 100회</button>
-      <button class="preset-btn" onclick="pSetPreset('200',this)">최근 200회</button>
-      <button class="preset-btn" onclick="pSetPreset('custom',this)">직접 설정</button>
+  <div class="range-selector pension-range" style="flex-direction:column;align-items:flex-start;gap:10px;">
+    <div style="display:flex;align-items:center;gap:10px;width:100%;flex-wrap:wrap;">
+      <span class="range-label">📊 분석 범위</span>
+      <span class="range-info" id="P-range-info" style="margin-left:0;font-size:14px;font-weight:700;color:var(--text);"></span>
     </div>
-    <div id="P-custom-range" style="display:none;align-items:center;gap:5px;flex-wrap:wrap;">
-      <select class="range-select" id="P-from"></select>
-      <span style="color:var(--muted);font-size:12px;">회 ~</span>
-      <select class="range-select" id="P-to"></select>
-      <span style="color:var(--muted);font-size:12px;">회</span>
-      <button class="range-apply" onclick="pApplyRange()">적용</button>
+    <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;width:100%;">
+      <div class="range-preset" id="P-presets">
+        <button class="preset-btn active" onclick="pSetPreset('all',this)">전체</button>
+        <button class="preset-btn" onclick="pSetPreset('50',this)">최근 50회</button>
+        <button class="preset-btn" onclick="pSetPreset('100',this)">최근 100회</button>
+        <button class="preset-btn" onclick="pSetPreset('200',this)">최근 200회</button>
+        <button class="preset-btn" onclick="pSetPreset('custom',this)">직접 설정</button>
+      </div>
+      <div id="P-custom-range" style="display:none;align-items:center;gap:5px;flex-wrap:wrap;">
+        <select class="range-select" id="P-from"></select>
+        <span style="color:var(--muted);font-size:12px;">회 ~</span>
+        <select class="range-select" id="P-to"></select>
+        <span style="color:var(--muted);font-size:12px;">회</span>
+        <button class="range-apply" onclick="pApplyRange()">적용</button>
+      </div>
     </div>
-    <span class="range-info" id="P-range-info"></span>
   </div>
 
   <div class="tabs pension-tabs">
@@ -845,7 +853,7 @@ body.pension-mode .page-btn.active-page { background: var(--P); color: #000; bor
     <button class="tab" onclick="pSwitch('combo',this)">🔗<br>조합</button>
     <button class="tab" onclick="pSwitch('reco',this)">✨<br>추천</button>
     <button class="tab" onclick="pSwitch('mynum',this)">⭐<br>내번호</button>
-    <button class="tab" onclick="pSwitch('add',this)">➕<br>추가</button>
+
   </div>
 
   <div class="sub-section active" id="P-freq">
@@ -1068,12 +1076,15 @@ let lFixNums=new Set(), pFixDigits={}; // pFixDigits: {0:3, 2:7, ...} 자릿수:
    DATA GETTERS
 ============================================================ */
 function getLData(){
-  const all=[...L_user,...L_DEFAULT].sort((a,b)=>b.round-a.round);
+  // 구글시트 데이터 있으면 우선 사용, 없으면 내장 데이터
+  const base = window._L_SHEET || L_DEFAULT;
+  const all=[...L_user,...base].sort((a,b)=>b.round-a.round);
   if(L_range.from===null) return all;
   return all.filter(d=>d.round>=L_range.from&&d.round<=L_range.to);
 }
 function getPData(){
-  const all=[...P_user,...P_DEFAULT].sort((a,b)=>b.round-a.round);
+  const base = window._P_SHEET || P_DEFAULT;
+  const all=[...P_user,...base].sort((a,b)=>b.round-a.round);
   if(P_range.from===null) return all;
   return all.filter(d=>d.round>=P_range.from&&d.round<=P_range.to);
 }
@@ -1238,8 +1249,10 @@ function lInitRange(){
   const minR=all[0].round,maxR=all[all.length-1].round;
   const f=document.getElementById('L-from'),t=document.getElementById('L-to');
   f.innerHTML='';t.innerHTML='';
-  for(let r=minR;r<=maxR;r+=10){f.innerHTML+=`<option value="${r}">${r}회</option>`;t.innerHTML+=`<option value="${r}">${r}회</option>`;}
-  if(maxR%10!==0)t.innerHTML+=`<option value="${maxR}">${maxR}회</option>`;
+  for(let r=1;r<=maxR;r++){
+    f.innerHTML+=`<option value="${r}">${r}회</option>`;
+    t.innerHTML+=`<option value="${r}">${r}회</option>`;
+  }
   f.value=minR;t.value=maxR;lUpdateInfo();
 }
 function lSetPreset(p,btn){
@@ -1292,7 +1305,6 @@ function lRenderFreq(){
   const maxF=sortedFreq[0][1];
   const data=getLData();
   const minR=data.length?data[data.length-1].round:'-',maxR=data.length?data[0].round:'-';
-  document.getElementById('L-data-count').textContent=`분석 범위: ${minR}회 ~ ${maxR}회 (총 ${total}회차)`;
   const grid=document.getElementById('L-freq-grid');grid.innerHTML='';
   // 첫줄 앞에 더미 1개 → 1의자리가 세로 정렬됨 (1~9가 두번째 열부터)
   grid.innerHTML+=`<div class="lfreq-item dummy"></div>`;
@@ -1711,8 +1723,10 @@ function pInitRange(){
   const minR=all[0].round,maxR=all[all.length-1].round;
   const f=document.getElementById('P-from'),t=document.getElementById('P-to');
   f.innerHTML='';t.innerHTML='';
-  for(let r=minR;r<=maxR;r+=5){f.innerHTML+=`<option value="${r}">${r}회</option>`;t.innerHTML+=`<option value="${r}">${r}회</option>`;}
-  if(maxR%5!==0)t.innerHTML+=`<option value="${maxR}">${maxR}회</option>`;
+  for(let r=1;r<=maxR;r++){
+    f.innerHTML+=`<option value="${r}">${r}회</option>`;
+    t.innerHTML+=`<option value="${r}">${r}회</option>`;
+  }
   f.value=minR;t.value=maxR;pUpdateInfo();
 }
 function pSetPreset(p,btn){
@@ -2126,6 +2140,52 @@ function toast(msg,type='lotto'){
 }
 
 /* ============================================================
+   GOOGLE SHEETS 연동 (Apps Script 프록시)
+============================================================ */
+const PROXY_URL = 'https://script.google.com/macros/s/AKfycbyBpA2KKJKx6KfMpGtz5YAcw1ZBgbpmDkg57VJ9omPDc5erWbXZ3jpVA-GbN9cm189C/exec';
+
+async function loadSheetData(){
+  try{
+    const headers = {'Accept': 'application/json'};
+    const [lRes, pRes] = await Promise.all([
+      fetch(PROXY_URL + '?type=lotto', {cache:'no-cache', headers, redirect:'follow'}),
+      fetch(PROXY_URL + '?type=pension', {cache:'no-cache', headers, redirect:'follow'})
+    ]);
+    const [lJson, pJson] = await Promise.all([lRes.json(), pRes.json()]);
+
+    // 로또 파싱
+    if(lJson && lJson.length > 0){
+      window._L_SHEET = lJson.map(r => ({
+        round: +r.r, date: '',
+        nums: [+r.d1, +r.d2, +r.d3, +r.d4, +r.d5, +r.d6].sort((a,b)=>a-b),
+        bonus: +r.b
+      }));
+      const maxL = Math.max(...window._L_SHEET.map(d=>d.round));
+      console.log(`✅ 로또 시트 로드: ${window._L_SHEET.length}회차 (최신: ${maxL}회)`);
+    }
+
+    // 연금복권 파싱
+    if(pJson && pJson.length > 0){
+      window._P_SHEET = pJson.map(r => ({
+        round: +r.r, date: '', cho: +r.d1,
+        num: String(+r.d2).padStart(6,'0'), bonus: ''
+      }));
+      const maxP = Math.max(...window._P_SHEET.map(d=>d.round));
+      console.log(`✅ 연금복권 시트 로드: ${window._P_SHEET.length}회차 (최신: ${maxP}회)`);
+    }
+
+    // UI 갱신
+    lInitRange(); pInitRange();
+    lUpdateInfo(); pUpdateInfo();
+    if(['freq','history','pair'].includes(lCurTab)) lRender(lCurTab);
+    if(['freq','history','combo'].includes(pCurTab)) pRender(pCurTab);
+
+  } catch(e) {
+    console.log('시트 로드 실패, 내장 데이터 사용:', e.message);
+  }
+}
+
+/* ============================================================
    INIT
 ============================================================ */
 initTheme();
@@ -2134,6 +2194,8 @@ updatePointUI();
 lRender('freq');
 lRenderSaved();pRenderSaved();
 lRenderMyNum();pRenderMyNum();
+// 구글시트 비동기 로드
+loadSheetData();
 </script>
 </body>
 </html>
