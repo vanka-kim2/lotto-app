@@ -2140,48 +2140,42 @@ function toast(msg,type='lotto'){
 }
 
 /* ============================================================
-   GOOGLE SHEETS 연동 (Apps Script 프록시)
+   DATA - GitHub JSON 파일에서 로드
 ============================================================ */
-const PROXY_URL = 'https://script.google.com/macros/s/AKfycbyBpA2KKJKx6KfMpGtz5YAcw1ZBgbpmDkg57VJ9omPDc5erWbXZ3jpVA-GbN9cm189C/exec';
+const DATA_URL = 'https://vanka-kim2.github.io/lotto-app/data.json';
 
 async function loadSheetData(){
   try{
-    const headers = {'Accept': 'application/json'};
-    const [lRes, pRes] = await Promise.all([
-      fetch(PROXY_URL + '?type=lotto', {cache:'no-cache', headers, redirect:'follow'}),
-      fetch(PROXY_URL + '?type=pension', {cache:'no-cache', headers, redirect:'follow'})
-    ]);
-    const [lJson, pJson] = await Promise.all([lRes.json(), pRes.json()]);
+    const res = await fetch(DATA_URL + '?v=' + Date.now(), {cache:'no-cache'});
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
 
-    // 로또 파싱
-    if(lJson && lJson.length > 0){
-      window._L_SHEET = lJson.map(r => ({
-        round: +r.r, date: '',
-        nums: [+r.d1, +r.d2, +r.d3, +r.d4, +r.d5, +r.d6].sort((a,b)=>a-b),
-        bonus: +r.b
+    if(data.lotto && data.lotto.length > 0){
+      window._L_SHEET = data.lotto.map(d=>({
+        round: d.r, date: '',
+        nums: d.n.slice().sort((a,b)=>a-b),
+        bonus: d.b
       }));
       const maxL = Math.max(...window._L_SHEET.map(d=>d.round));
-      console.log(`✅ 로또 시트 로드: ${window._L_SHEET.length}회차 (최신: ${maxL}회)`);
+      console.log('✅ 로또 로드: ' + window._L_SHEET.length + '회차 (최신: ' + maxL + '회)');
     }
 
-    // 연금복권 파싱
-    if(pJson && pJson.length > 0){
-      window._P_SHEET = pJson.map(r => ({
-        round: +r.r, date: '', cho: +r.d1,
-        num: String(+r.d2).padStart(6,'0'), bonus: ''
+    if(data.pension && data.pension.length > 0){
+      window._P_SHEET = data.pension.map(d=>({
+        round: d.r, date: '', cho: d.c,
+        num: String(d.n).padStart(6,'0'), bonus: ''
       }));
       const maxP = Math.max(...window._P_SHEET.map(d=>d.round));
-      console.log(`✅ 연금복권 시트 로드: ${window._P_SHEET.length}회차 (최신: ${maxP}회)`);
+      console.log('✅ 연금복권 로드: ' + window._P_SHEET.length + '회차 (최신: ' + maxP + '회)');
     }
 
-    // UI 갱신
     lInitRange(); pInitRange();
     lUpdateInfo(); pUpdateInfo();
     if(['freq','history','pair'].includes(lCurTab)) lRender(lCurTab);
     if(['freq','history','combo'].includes(pCurTab)) pRender(pCurTab);
 
-  } catch(e) {
-    console.log('시트 로드 실패, 내장 데이터 사용:', e.message);
+  }catch(e){
+    console.log('JSON 로드 실패, 내장 데이터 사용:', e.message);
   }
 }
 
